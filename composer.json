@@ -1,0 +1,24 @@
+{
+	"name": "rnaby/wp-flash-message",
+	"description": "A PHP Composer library for WordPress to make front-end flash messaging easy.",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"license": "MIT",
+	"type": "library",
+	"authors": [
+		{
+			"name": "Khan M Rashedun-Naby",
+			"email": "naby88@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+	},
+	"require-dev": {
+	},
+	"autoload": {
+		"psr-4": {
+			"TheDramatist\\WPFlashMessage\\": "src/"
+		}
+	}
+}
