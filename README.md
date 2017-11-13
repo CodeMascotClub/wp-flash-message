@@ -13,7 +13,7 @@ A PHP Composer library for WordPress to make front-end flash messaging easy.
 
 ## Coding styles and technique
 * All input data escaped and validated.
-* **TDD:** Some **PHPUnit** tests Has been written.
+* **PSR-4** autoloading used.
 * Developed as *Composer* package.
 * **YODA** condition check applied.
 * Maintained ***Right Margin*** carefully. Usually that is 80 characters.
@@ -32,7 +32,36 @@ $ composer require rnaby/wp-flash-message
 
 ## Usage
 
-`// Todo`
+#### Step 1
+Instantiate the `FlashMessage` class object like below-
+```php
+$flash_message = new \TheDramatist\WPFlashMessage\FlashMessage();
+```
+#### Step 2
+Turn on the `SESSION` in *PHP* like below-
+```php
+$flash_message->start_session();
+```
+#### Step 3
+Set you message like below-
+```php
+$flash_message->error(
+	__(
+		'Your message here',
+		'text-domain'
+	),
+	// This is the URL where you want to redirect.
+	home_url()
+);
+```
+#### Step 4
+Display the `SESSION` message like below-
+```php
+// Display the messages
+$flash_message->display();
+```
+#### Step 5
+Write `CSS` style as you want to style the message.
 
 ## Crafted by Khan M Rashedun-Naby
 

@@ -12,47 +12,84 @@ namespace TheDramatist\WPFlashMessage;
  * @package TheDramatist\WPFlashMessage
  * @license MIT
  */
-class FlashMessages {
-	// Message types and shortcuts
+class FlashMessage {
+	/**
+	 * Message types and shortcuts
+	 */
 	const INFO     = 'i';
 	const SUCCESS  = 's';
 	const WARNING  = 'w';
 	const ERROR    = 'e';
 
-	// Default message type
+	/**
+	 * Default message type
+	 */
 	const DEFAULT_TYPE = self::INFO;
-
-	// Message types and order
-	//
-	// Note:  The order that message types are listed here is the same order
-	// they will be printed on the screen (ie: when displaying all messages)
-	//
-	// This can be overridden with the display() method by manually defining
-	// the message types in the order you want to display them. For example:
-	//
+	
+	/**
+	 * Message types and order
+	 *
+	 * Note:  The order that message types are listed here is the same order
+	 * they will be printed on the screen (ie: when displaying all messages)
+	 * This can be overridden with the display() method by manually defining
+	 * the message types in the order you want to display them.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
 	protected $msg_types = [
 		self::ERROR   => 'error',
 		self::WARNING => 'warning',
 		self::SUCCESS => 'success',
 		self::INFO    => 'info',
 	];
-
-	// Each message gets wrapped in this
+	
+	/**
+	 * Each message gets wrapped in this
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
 	protected $msg_wrapper = "<div class='%s'>%s</div>\n";
-
-	// Prepend and append to each message (inside of the wrapper)
+	
+	/**
+	 * Prepend to each message (inside of the wrapper)
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
 	protected $msg_before = '';
-
+	
+	/**
+	 * append to each message (inside of the wrapper)
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
 	protected $msg_after = '';
-
-	// HTML for the close button
+	
+	/**
+	 * HTML for the close button
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
 	protected $close_btn = '';
 
-	// CSS Classes
+	/**
+	 * CSS Classes
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
 	protected $sticky_css_class = 'sticky';
-
 	protected $msg_css_class = 'alert dismissable';
-
 	protected $css_class_map = [
 		self::INFO    => 'alert-info',
 		self::SUCCESS => 'alert-success',
@@ -60,20 +97,38 @@ class FlashMessages {
 		self::ERROR   => 'alert-danger',
 	];
 
-	// Where to redirect the user after a message is queued
+	/**
+	 * Where to redirect the user after a message is queued
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var null
+	 */
 	protected $redirect_url = null;
 
-	// The unique ID for the session/messages (do not edit)
-	protected $msg_id;
-
 	/**
-	 * __construct
+	 * The unique ID for the session/messages (do not edit)
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected $msg_id;
+	
+	/**
+	 * FlashMessage constructor.
+	 *
+	 * @since 1.0.0
 	 *
 	 */
 	public function __construct() {
-		// Generate a unique ID for this user and session
+		/**
+		 * Generate a unique ID for this user and session
+		 */
 		$this->msg_id = sha1( uniqid() );
-		// Create session array to hold our messages if it doesn't already exist
+		/**
+		 * Create session array to hold our messages if it doesn't already exist
+		 */
 		if (
 			! isset( $_SESSION ) ||
 			! array_key_exists( 'flash_messages', $_SESSION )
@@ -82,6 +137,18 @@ class FlashMessages {
 		}
 
 	}
+	
+	/**
+	 * Starting session.
+	 */
+	public function start_session() {
+		add_action( 'init', function() {
+			// Starting session
+			if ( ! session_id() ) {
+				session_start();
+			}
+		} );
+	}
 
 	/**
 	 * Add an info message
@@ -89,6 +156,8 @@ class FlashMessages {
 	 * @param  string  $message      The message text
 	 * @param  string  $redirect_url Where to redirect once the message is added
 	 * @param  boolean $sticky       Sticky the message (hides the close button)
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -109,7 +178,9 @@ class FlashMessages {
 	 * @param  string  $redirect_url    Where to redirect once the message is added
 	 * @param  boolean $sticky          Whether or not the message is stickied
 	 *
-	 * @return object
+	 * @since  1.0.0
+	 *
+	 * @return object | bool
 	 *
 	 */
 	public function add(
@@ -126,7 +197,7 @@ class FlashMessages {
 			$type = strtolower( $type[0] );
 		}
 		if ( ! array_key_exists( $type, $this->msg_types ) ) {
-			$type = $this->DEFAULT_TYPE;
+			$type = self::DEFAULT_TYPE;
 		}
 
 		// Add the message to the session data
@@ -149,6 +220,8 @@ class FlashMessages {
 
 	/**
 	 * Redirect the user if a URL was given
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -174,6 +247,8 @@ class FlashMessages {
 	 * @param  string  $redirect_url Where to redirect once the message is added
 	 * @param  boolean $sticky       Sticky the message (hides the close button)
 	 *
+	 * @since  1.0.0
+	 *
 	 * @return object
 	 *
 	 */
@@ -191,6 +266,8 @@ class FlashMessages {
 	 * @param  string  $message      The message text
 	 * @param  string  $redirect_url Where to redirect once the message is added
 	 * @param  boolean $sticky       Sticky the message (hides the close button)
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -210,6 +287,8 @@ class FlashMessages {
 	 * @param  string  $redirect_url Where to redirect once the message is added
 	 * @param  boolean $sticky       Sticky the message (hides the close button)
 	 *
+	 * @since  1.0.0
+	 *
 	 * @return object
 	 *
 	 */
@@ -227,6 +306,8 @@ class FlashMessages {
 	 * @param  bool   $message      The message text
 	 * @param  string $redirect_url Where to redirect once the message is added
 	 * @param  string $type         The $msg_type
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -247,6 +328,8 @@ class FlashMessages {
 	 *                          (string)   print a single message type
 	 * @param  boolean $print   Whether to print the data or return it
 	 *
+	 * @since  1.0.0
+	 *
 	 * @return string
 	 *
 	 */
@@ -257,12 +340,16 @@ class FlashMessages {
 
 		$output = '';
 		// Print all the message types
-		if ( is_null( $types ) || ! $types || ( is_array( $types ) && empty( $types ) ) ) {
+		if (
+			is_null( $types ) ||
+			! $types ||
+			( is_array( $types ) && empty( $types ) )
+		) {
 			$types = array_keys( $this->msg_types );
 			// Print multiple message types (as defined by an array)
 		} elseif ( is_array( $types ) && ! empty( $types ) ) {
 			$the_types = $types;
-			$types    = [];
+			$types     = [];
 			foreach ( $the_types as $type ) {
 				$types[] = strtolower( $type[0] );
 			}
@@ -274,7 +361,10 @@ class FlashMessages {
 
 		// Retrieve and format the messages, then remove them from session data
 		foreach ( $types as $type ) {
-			if ( ! isset( $_SESSION['flash_messages'][ $type ] ) || empty( $_SESSION['flash_messages'][ $type ] ) ) {
+			if (
+				! isset( $_SESSION['flash_messages'][ $type ] ) ||
+				empty( $_SESSION['flash_messages'][ $type ] )
+			) {
 				continue;
 			}
 			foreach ( $_SESSION['flash_messages'][ $type ] as $msg_data ) {
@@ -287,7 +377,7 @@ class FlashMessages {
 		if ( $print ) {
 			echo wp_kses_post( $output );
 		} else {
-			return $output;
+			return wp_kses_post( $output );
 		}
 	}
 
@@ -295,15 +385,16 @@ class FlashMessages {
 	 * Format a message
 	 *
 	 * @param  array  $msg_data_array  Array of message data
-	 * @param  string $type           The $msg_type
+	 * @param  string $type            The $msg_type
 	 *
-	 * @return string                 The formatted message
+	 * @since  1.0.0
+	 *
+	 * @return string                  The formatted message
 	 *
 	 */
 	protected function format_message( $msg_data_array, $type ) {
-
 		$msg_type   = isset( $this->msg_types[ $type ] )
-			? $type : $this->DEFAULT_TYPE;
+			? $type : self::DEFAULT_TYPE;
 		$css_class  = $this->msg_css_class . ' ' . $this->css_class_map[ $type ];
 		$msg_before = $this->msg_before;
 
@@ -332,12 +423,16 @@ class FlashMessages {
 	 * @param  mixed $types   (array) Clear all of the message types in array
 	 *                        (string)  Only clear the one given message type
 	 *
+	 * @since  1.0.0
+	 *
 	 * @return object
 	 *
 	 */
 	protected function clear( $types = [] ) {
-
-		if ( ( is_array( $types ) && empty( $types ) ) || is_null( $types ) || ! $types ) {
+		if (
+			( is_array( $types ) && empty( $types ) ) ||
+			is_null( $types ) || ! $types
+		) {
 			unset( $_SESSION['flash_messages'] );
 		} elseif ( ! is_array( $types ) ) {
 			$types = [ $types ];
@@ -353,12 +448,13 @@ class FlashMessages {
 	/**
 	 * See if there are any queued error messages
 	 *
+	 * @since  1.0.0
+	 *
 	 * @return boolean
 	 *
 	 */
 	public function has_errors() {
-		return empty( $_SESSION['flash_messages'][ self::ERROR ] )
-			? false : true;
+		return empty( $_SESSION['flash_messages'][ self::ERROR ] ) ? false : true;
 	}
 
 	/**
@@ -366,11 +462,12 @@ class FlashMessages {
 	 *
 	 * @param  string $type The $msg_type
 	 *
+	 * @since  1.0.0
+	 *
 	 * @return boolean
 	 *
 	 */
 	public function has_messages( $type = null ) {
-
 		if ( ! is_null( $type ) ) {
 			if ( ! empty( $_SESSION['flash_messages'][ $type ] ) ) {
 				return $_SESSION['flash_messages'][ $type ];
@@ -378,10 +475,10 @@ class FlashMessages {
 		} else {
 			foreach ( array_keys( $this->msg_types ) as $type ) {
 				if (
-					isset( $_SESSION[ 'flash_messages' ][ $type ] ) &&
-					! empty( $_SESSION[ 'flash_messages' ][ $type ] )
+					isset( $_SESSION['flash_messages'][ $type ] ) &&
+					! empty( $_SESSION['flash_messages'][ $type ] )
 				) {
-					return $_SESSION[ 'flash_messages' ][ $type ];
+					return $_SESSION['flash_messages'][ $type ];
 				}
 			}
 		}
@@ -397,6 +494,8 @@ class FlashMessages {
 	 *                            The first is the $msg_css_class,
 	 *                            The second is the message text.
 	 *
+	 * @since  1.0.0
+	 *
 	 * @return object
 	 *
 	 */
@@ -408,7 +507,9 @@ class FlashMessages {
 	/**
 	 * Prepend string to the message (inside of the message wrapper)
 	 *
-	 * @param string $msg_before string to prepend to the message
+	 * @param  string $msg_before string to prepend to the message
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -421,7 +522,9 @@ class FlashMessages {
 	/**
 	 * Append string to the message (inside of the message wrapper)
 	 *
-	 * @param string $msg_after string to append to the message
+	 * @param  string $msg_after string to append to the message
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -434,7 +537,9 @@ class FlashMessages {
 	/**
 	 * Set the HTML for the close button
 	 *
-	 * @param string $close_btn HTML to use for the close button
+	 * @param  string $close_btn HTML to use for the close button
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -447,7 +552,9 @@ class FlashMessages {
 	/**
 	 * Set the CSS class for sticky notes
 	 *
-	 * @param string $sticky_css_class the CSS class to use for sticky messages
+	 * @param  string $sticky_css_class the CSS class to use for sticky messages
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -460,7 +567,9 @@ class FlashMessages {
 	/**
 	 * Set the CSS class for messages
 	 *
-	 * @param string $msg_css_class The CSS class to use for messages
+	 * @param  string $msg_css_class The CSS class to use for messages
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
@@ -473,10 +582,11 @@ class FlashMessages {
 	/**
 	 * Set the CSS classes for message types
 	 *
-	 * @param mixed $msg_type     (string) The message type
+	 * @param  mixed $msg_type     (string) The message type
 	 *                            (array) key/value pairs for the class map
-	 * @param mixed $css_class    (string) the CSS class to use
-	 *                            (null) not used when $msg_type is an array
+	 * @param  mixed $css_class    (string) the CSS class to use
+	 *
+	 * @since  1.0.0
 	 *
 	 * @return object
 	 *
