@@ -7,7 +7,7 @@ A PHP Composer library for WordPress to make front-end flash messaging easy.
 * [Coding styles and technique](#coding-styles-and-technique)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Crafted by Khan M Rashedun-Naby](#crafted-by-khan)
+* [Crafted by Khan](#crafted-by-khan)
 * [License](#license)
 * [Contributing](#contributing)
 
@@ -63,7 +63,7 @@ $flash_message->display();
 #### Step 5
 Write `CSS` style as you want to style the message.
 
-## Crafted by Khan M Rashedun-Naby
+## Crafted by Khan
 
 I'm a professional web developer and I've written this script for my personal usage.
 

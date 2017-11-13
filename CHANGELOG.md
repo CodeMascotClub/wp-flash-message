@@ -1,11 +1,6 @@
 # Change Log
-All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
 
-(This document follows the strucutre described in http://keepachangelog.com/)
+## 2017-11-14 [1.0.0]
+- Initial Release
 
-## [Unreleased]
-### Added
-
-
-[Unreleased]: http://github.com/VENDOR/PROJECT/compare/
+[Unreleased]: http://github.com/rnaby/wp-flash-message/compare/
