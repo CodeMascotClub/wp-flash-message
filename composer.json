@@ -1,7 +1,7 @@
 {
 	"name": "rnaby/wp-flash-message",
 	"description": "A PHP Composer library for WordPress to make front-end flash messaging easy.",
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"license": "MIT",
 	"type": "library",
