@@ -1,15 +1,15 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace TheDramatist\WPFlashMessage;
+namespace CodeMascot\WPFlashMessage;
 
 /**
  * Class FlashMessages
  *
- * @author  Khan M Rashedun-Naby, TheDramatist
- * @link    http://thedramatist.me
- * @version 1.0.0
+ * @author  Khan M Rashedun-Naby, CodeMascot
+ * @link    https://www.codemascot.com
+ * @version 1.0.1
  * @since   1.0.0
- * @package TheDramatist\WPFlashMessage
+ * @package CodeMascot\WPFlashMessage
  * @license MIT
  */
 class FlashMessage {
