@@ -1,4 +1,4 @@
-# CodeMascot WP Flash Message
+# WP Flash Message
 
 A *PHP* *Composer* library for *WordPress* to make front-end flash messaging easy.
 
