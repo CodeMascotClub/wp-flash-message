@@ -25,7 +25,7 @@ class FlashMessage {
 	 * Default message type
 	 */
 	const DEFAULT_TYPE = self::INFO;
-	
+
 	/**
 	 * Message types and order
 	 *
@@ -44,7 +44,7 @@ class FlashMessage {
 		self::SUCCESS => 'success',
 		self::INFO    => 'info',
 	];
-	
+
 	/**
 	 * Each message gets wrapped in this
 	 *
@@ -53,7 +53,7 @@ class FlashMessage {
 	 * @var string
 	 */
 	protected $msg_wrapper = "<div class='%s'>%s</div>\n";
-	
+
 	/**
 	 * Prepend to each message (inside of the wrapper)
 	 *
@@ -62,7 +62,7 @@ class FlashMessage {
 	 * @var string
 	 */
 	protected $msg_before = '';
-	
+
 	/**
 	 * append to each message (inside of the wrapper)
 	 *
@@ -71,7 +71,7 @@ class FlashMessage {
 	 * @var string
 	 */
 	protected $msg_after = '';
-	
+
 	/**
 	 * HTML for the close button
 	 *
@@ -114,7 +114,7 @@ class FlashMessage {
 	 * @var string
 	 */
 	protected $msg_id;
-	
+
 	/**
 	 * FlashMessage constructor.
 	 *
@@ -137,7 +137,7 @@ class FlashMessage {
 		}
 
 	}
-	
+
 	/**
 	 * Starting session.
 	 */
@@ -341,9 +341,9 @@ class FlashMessage {
 		$output = '';
 		// Print all the message types
 		if (
-			is_null( $types ) ||
-			! $types ||
-			( is_array( $types ) && empty( $types ) )
+			is_null( $types )
+			|| ! $types
+			|| ( is_array( $types ) && empty( $types ) )
 		) {
 			$types = array_keys( $this->msg_types );
 			// Print multiple message types (as defined by an array)
@@ -362,8 +362,8 @@ class FlashMessage {
 		// Retrieve and format the messages, then remove them from session data
 		foreach ( $types as $type ) {
 			if (
-				! isset( $_SESSION['flash_messages'][ $type ] ) ||
-				empty( $_SESSION['flash_messages'][ $type ] )
+				! isset( $_SESSION['flash_messages'][ $type ] )
+				|| empty( $_SESSION['flash_messages'][ $type ] )
 			) {
 				continue;
 			}
@@ -374,11 +374,11 @@ class FlashMessage {
 		}
 
 		// Print everything to the screen (or return the data)
-		if ( $print ) {
-			echo wp_kses_post( $output );
-		} else {
+		if ( ! $print ) {
 			return wp_kses_post( $output );
 		}
+
+		echo wp_kses_post( $output );
 	}
 
 	/**
@@ -401,7 +401,6 @@ class FlashMessage {
 		// If sticky then append the sticky CSS class
 		if ( $msg_data_array['sticky'] ) {
 			$css_class .= ' ' . $this->sticky_css_class;
-
 			// If it's not sticky then add the close button
 		} else {
 			$msg_before = $this->close_btn . $msg_before;
@@ -430,8 +429,9 @@ class FlashMessage {
 	 */
 	protected function clear( $types = [] ) {
 		if (
-			( is_array( $types ) && empty( $types ) ) ||
-			is_null( $types ) || ! $types
+			( is_array( $types ) && empty( $types ) )
+			|| is_null( $types )
+			|| ! $types
 		) {
 			unset( $_SESSION['flash_messages'] );
 		} elseif ( ! is_array( $types ) ) {
@@ -475,8 +475,8 @@ class FlashMessage {
 		} else {
 			foreach ( array_keys( $this->msg_types ) as $type ) {
 				if (
-					isset( $_SESSION['flash_messages'][ $type ] ) &&
-					! empty( $_SESSION['flash_messages'][ $type ] )
+					isset( $_SESSION['flash_messages'][ $type ] )
+					&& ! empty( $_SESSION['flash_messages'][ $type ] )
 				) {
 					return $_SESSION['flash_messages'][ $type ];
 				}
@@ -601,9 +601,11 @@ class FlashMessage {
 				$msg_type => $css_class,
 			];
 		}
+
 		foreach ( $msg_type as $type => $css_class ) {
 			$this->css_class_map[ $type ] = $css_class;
 		}
+
 		return $this;
 	}
 
