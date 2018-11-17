@@ -1,5 +1,5 @@
 {
-	"name": "rnaby/wp-flash-message",
+	"name": "codemascot/wp-flash-message",
 	"description": "A PHP Composer library for WordPress to make front-end flash messaging easy.",
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -18,7 +18,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"TheDramatist\\WPFlashMessage\\": "src/"
+			"CodeMascot\\WPFlashMessage\\": "src/"
 		}
 	}
 }
