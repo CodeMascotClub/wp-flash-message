@@ -1,6 +1,6 @@
-# TheDramatist WP Flash Message
+# CodeMascot WP Flash Message
 
-A PHP Composer library for WordPress to make front-end flash messaging easy.
+A *PHP* *Composer* library for *WordPress* to make front-end flash messaging easy.
 
 ## Table Of Contents
 
@@ -27,7 +27,7 @@ A PHP Composer library for WordPress to make front-end flash messaging easy.
 The best way to use this package is through Composer:
 
 ```BASH
-$ composer require rnaby/wp-flash-message
+$ composer require codemascot/wp-flash-message
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ $ composer require rnaby/wp-flash-message
 #### Step 1
 Instantiate the `FlashMessage` class object like below-
 ```php
-$flash_message = new \TheDramatist\WPFlashMessage\FlashMessage();
+$flash_message = new \CodeMascot\WPFlashMessage\FlashMessage();
 ```
 #### Step 2
 Turn on the `SESSION` in *PHP* like below-
@@ -65,11 +65,11 @@ Write `CSS` style as you want to style the message.
 
 ## Crafted by Khan
 
-I'm a professional web developer and I've written this script for my personal usage.
+I'm Khan AKA *CodeMascot* a professional web developer and I've written this script for my personal usage.
 
 ## License
 
-Copyright (c) 2017 Khan M Rashedun-Naby, TheDramatist
+Copyright (c) 2018 Khan M Rashedun-Naby, CodeMascot
 
 Good news, this plugin is free for everyone! Since it's released under the [MIT License](LICENSE) you can use it free of charge on your personal or commercial website.
 
